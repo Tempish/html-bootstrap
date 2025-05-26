@@ -1,0 +1,88 @@
+.inicio {
+    mask-image: url(https://i.imgur.com/N2enxNm.png);
+    mask-position: 50% 10%;
+    mask-size: 80%;
+    mask-repeat: no-repeat;
+}
+
+.accordion-logo {
+    max-height: 50px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.buttoncollapse-logo {
+    max-height: 50px;
+}
+
+.buttonlist-logo {
+    max-height: 75px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.card-portrait {
+    max-width: 600px;
+    mask-image: url(https://watercolors.giantsoup.com/phb/phb_bottom/0001.png);
+    mask-position: 0px -550px;
+    mask-repeat: repeat-x;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.accordion-char {
+    left: 0;
+    bottom: 0;
+}
+
+.accordion-text {
+    padding: var(--bs-accordion-body-padding-y) var(--bs-accordion-body-padding-x);
+    text-align: center;
+    margin: auto;
+}
+
+.card-text1 {
+    text-align: center;
+    margin: auto;
+}
+
+.accordion-bg1 {
+    background-image: url(../images/accordion_bg1.jpg);
+    background-size: cover;
+    padding: 0%;
+}
+
+.accordion-bg2 {
+    background-image: url(../images/accordion_bg2.jpg);
+    background-size: cover;
+    padding: 0%;
+}
+
+.accordion-bg3 {
+    background-image: url(../images/accordion_bg3.jpg);
+    background-size: cover;
+    padding: 0%;
+}
+
+.accordion-bg4 {
+    background-image: url(../images/accordion_bg4.jpg);
+    background-size: cover;
+    padding: 0%;
+}
+
+.accordion-bg5 {
+    background-image: url(../images/accordion_bg5.jpg);
+    background-size: cover;
+    padding: 0%;
+}
+
+.accordion-bg6 {
+    background-image: url(../images/accordion_bg6.jpg);
+    background-size: cover;
+    padding: 0%;
+}

@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sitio web Bootstrap</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- Script para cambiar el tema de la página según lo seleccionado en el dropdown menu
+     Utiliza localStorage para guardar la selección del usuario
+     La mayoría hecha por Bootstrap en su documentación -->
+    <script>
+        /*!
+         * Color mode toggler for Bootstrap's docs (https://getbootstrap.com/)
+         * Copyright 2011-2025 The Bootstrap Authors
+         * Licensed under the Creative Commons Attribution 3.0 Unported License.
+         */
+
+        (() => {
+            'use strict'
+
+            const getStoredTheme = () => localStorage.getItem('theme')
+            const setStoredTheme = theme => localStorage.setItem('theme', theme)
+
+            const getPreferredTheme = () => {
+                const storedTheme = getStoredTheme()
+                if (storedTheme) {
+                    return storedTheme
+                }
+
+                return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+            }
+
+            const setTheme = theme => {
+                if (theme === 'auto') {
+                    document.documentElement.setAttribute('data-bs-theme', (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'))
+                } else {
+                    document.documentElement.setAttribute('data-bs-theme', theme)
+                }
+            }
+
+            setTheme(getPreferredTheme())
+
+            //Modifiqué esta función para que solamente cambie el .active de los botones
+            const showActiveTheme = theme => {
+                const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
+
+                document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
+                    element.classList.remove('active')
+                })
+
+                btnToActive.classList.add('active')
+            }
+
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+                const storedTheme = getStoredTheme()
+                if (storedTheme !== 'light' && storedTheme !== 'dark') {
+                    setTheme(getPreferredTheme())
+                }
+            })
+
+            window.addEventListener('DOMContentLoaded', () => {
+                showActiveTheme(getStoredTheme() || 'auto')
+
+                document.querySelectorAll('[data-bs-theme-value]')
+                    .forEach(toggle => {
+                        toggle.addEventListener('click', () => {
+                            const theme = toggle.getAttribute('data-bs-theme-value')
+                            setStoredTheme(theme)
+                            setTheme(theme)
+                            showActiveTheme(theme)
+                        })
+                    })
+            })
+        })()
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <header class="container">
+            <h1>
+                <a class="navbar-brand" href="index.html"><img src="assets/images/logo.png" class="img-fluid"
+                        width="220px" alt="HATSUNE MIKU COLORFUL STAGE"></a>
+            </h1>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="acerca.html">Acerca de</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="contenido.html">Contenido principal</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
+
+                    <!-- Dropdown de temas -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Tema
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><button class="dropdown-item" data-bs-theme-value="light">Claro</button></li>
+                            <li><button class="dropdown-item" data-bs-theme-value="dark">Oscuro</button></li>
+                            <li><button class="dropdown-item" data-bs-theme-value="auto">Automático</button></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </header>
+    </nav>
+
+    <main class="container mt-5">
+        <div class="row row-cols-md-1 justify-content-md-center">
+            <!-- Resumen -->
+            <article class="col-md-12">
+                <h1 class="display-1">Contenido principal</h1>
+                <p class="fs-5 fw-light">Aquí encontrarás información de todos los personajes de <i>Project SEKAI</i>.
+                    Además podrás ver los distintos SEKAI.</p>
+            </article>
+            <!-- Imagen principal -->
+            <div class="col-md-6">
+                <figure class="figure">
+                    <img src="assets/images/contenido.png" alt="Inicio" class="figure-img img-fluid inicio">
+                    <figcaption class="figure-caption text-center">Shinonome Ena, de 25-ji, Nightcord de.
+                    </figcaption>
+                </figure>
+            </div>
+            <!-- Selector de lista de botones -->
+            <div class="col-md-12" id="selector">
+                <div class="d-flex justify-content-center mt-3">
+                    <p class="d-inline-flex gap-1">
+                    <div class="btn-group" role="group">
+                        <button class="btn border" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#virtualSinger" aria-expanded="true" aria-controls="virtualSinger">
+                            <img src="assets/images/accordion_logo1.png" alt="VIRTUAL SINGER"
+                                class="img-fluid buttoncollapse-logo">
+                        </button>
+                        <button class="btn border" type="button" data-bs-toggle="collapse" data-bs-target="#leoNeed"
+                            aria-expanded="false" aria-controls="leoNeed">
+                            <img src="assets/images/accordion_logo2.png" alt="Leo/need"
+                                class="img-fluid buttoncollapse-logo">
+                        </button>
+                        <button class="btn border" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#moreMoreJump" aria-expanded="false" aria-controls="moreMoreJump">
+                            <img src="assets/images/accordion_logo3.png" alt="MORE MORE JUMP!"
+                                class="img-fluid buttoncollapse-logo">
+                        </button>
+                        <button class="btn border" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#vividBadSquad" aria-expanded="false" aria-controls="vividBadSquad">
+                            <img src="assets/images/accordion_logo4.png" alt="Vivid BAD SQUAD"
+                                class="img-fluid buttoncollapse-logo">
+                        </button>
+                        <button class="btn border" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#wonderlandsShowtime" aria-expanded="false"
+                            aria-controls="wonderlandsShowtime">
+                            <img src="assets/images/accordion_logo5.png" alt="Wonderlands x Showtime"
+                                class="img-fluid buttoncollapse-logo">
+                        </button>
+                        <button class="btn border" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#nightcordAt25" aria-expanded="false" aria-controls="nightcordAt25">
+                            <img src="assets/images/accordion_logo6.png" alt="25-ji, Nightcord de."
+                                class="img-fluid buttoncollapse-logo">
+                        </button>
+                    </div>
+                    </p>
+                </div>
+                <!-- Subselector de lista de botones de VIRTUAL SINGER -->
+                <div class="collapse show p-3" id="virtualSinger" data-bs-parent="#selector">
+                    <div class="row justify-content-center" id="subSelector1">
+                        <div class="list-group col-md-auto">
+                            <button type="button" class="list-group-item list-group-item-action p-5"
+                                data-bs-toggle="collapse" data-bs-target="#hatsuneMiku" aria-expanded="true"
+                                aria-controls="hatsuneMiku"><img src="assets/images/virtualSinger1.png"
+                                    alt="HATSUNE MIKU" class="img-fluid buttonlist-logo"></button>
+                            <button type="button" class="list-group-item list-group-item-action p-5"
+                                data-bs-toggle="collapse" data-bs-target="#kagamineRin" aria-expanded="false"
+                                aria-controls="kagamineRin"><img src="assets/images/virtualSinger2.png"
+                                    alt="KAGAMINE RIN" class="img-fluid buttonlist-logo"></button>
+                            <button type="button" class="list-group-item list-group-item-action p-5"
+                                data-bs-toggle="collapse" data-bs-target="#kagamineLen" aria-expanded="false"
+                                aria-controls="kagamineLen"><img src="assets/images/virtualSinger3.png"
+                                    alt="KAGAMINE LEN" class="img-fluid buttonlist-logo"></button>
+                            <button type="button" class="list-group-item list-group-item-action p-5"
+                                data-bs-toggle="collapse" data-bs-target="#megurineLuka" aria-expanded="false"
+                                aria-controls="megurineLuka"><img src="assets/images/virtualSinger4.png"
+                                    alt="MEGURINE LUKA" class="img-fluid buttonlist-logo"></button>
+                            <button type="button" class="list-group-item list-group-item-action p-5"
+                                data-bs-toggle="collapse" data-bs-target="#meiko" aria-expanded="false"
+                                aria-controls="meiko"><img src="assets/images/virtualSinger5.png" alt="MEIKO"
+                                    class="img-fluid buttonlist-logo"></button>
+                            <button type="button" class="list-group-item list-group-item-action p-5"
+                                data-bs-toggle="collapse" data-bs-target="#kaito" aria-expanded="false"
+                                aria-controls="kaito"><img src="assets/images/virtualSinger6.png" alt="KAITO"
+                                    class="img-fluid buttonlist-logo"></button>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="collapse show" id="hatsuneMiku" data-bs-parent="#subSelector1">
+                                <div class="card">
+                                    <img src="assets/images/virtualSingerPortrait1.png"
+                                        class="card-img-top img-fluid card-portrait" alt="HATSUNE MIKU">
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="margin-top: 25rem;">HATSUNE MIKU</h5>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">Género: Femenino</li>
+                                            <li class="list-group-item">Aniversario: 31 de agosto</li>
+                                            <li class="list-group-item">Altura: 158 cm</li>
+                                        </ul>
+                                        <p class="card-text">Una VIRTUAL SINGER con su característico pelo turquesa
+                                            recogido en dos largas coletas. Su voz bonita, viva y alegre se presta a
+                                            una gran variedad de géneros musicales. Es la más popular de los VIRTUAL
+                                            SINGER, con fans de todas las edades en todo el mundo.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="collapse" id="kagamineRin" data-bs-parent="#subSelector1">
+                                <div class="card">
+                                    <img src="assets/images/virtualSingerPortrait2.png"
+                                        class="card-img-top img-fluid card-portrait" alt="KAGAMINE RIN">
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="margin-top: 25rem;">Kagamine Rin</h5>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">Género: Femenino</li>
+                                            <li class="list-group-item">Aniversario: 27 de diciembre</li>
+                                            <li class="list-group-item">Altura: 152 cm</li>
+                                        </ul>
+                                        <p class="card-text">La contraparte femenina de Kagamine Len, lleva el pelo
+                                            corto y rubio atado con una diadema de lazo. Su encantadora voz complementa
+                                            a la perfección su simpática apariencia y su enérgica personalidad.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="collapse" id="kagamineLen" data-bs-parent="#subSelector1">
+                                <div class="card">
+                                    <img src="assets/images/virtualSingerPortrait3.png"
+                                        class="card-img-top img-fluid card-portrait" alt="KAGAMINE LEN">
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="margin-top: 25rem;">Kagamine Len</h5>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">Género: Masculino</li>
+                                            <li class="list-group-item">Aniversario: 27 de diciembre</li>
+                                            <li class="list-group-item">Altura: 156 cm</li>
+                                        </ul>
+                                        <p class="card-text">La contraparte masculina de Kagamine Rin, lleva el pelo
+                                            corto y rubio recogido en una pequeña coleta. Su voz juvenil tiene fuerza y
+                                            firmeza, pero también puede transmitir de forma excelente una amplia gama de
+                                            emociones.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="collapse" id="megurineLuka" data-bs-parent="#subSelector1">
+                                <div class="card">
+                                    <img src="assets/images/virtualSingerPortrait4.png"
+                                        class="card-img-top img-fluid card-portrait" alt="MEGURINE LUKA">
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="margin-top: 25rem;">Megurine Luka</h5>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">Género: Femenino</li>
+                                            <li class="list-group-item">Aniversario: 30 de enero</li>
+                                            <li class="list-group-item">Altura: 162 cm</li>
+                                        </ul>
+                                        <p class="card-text">Una VIRTUAL SINGER de larga melena rosa. Tiene un carácter
+                                            tranquilo y una voz elegante y suave, que puede rebosar pasión cuando canta
+                                            canciones emotivas. Es bilingüe y canta tanto en japonés como en inglés.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="collapse" id="meiko" data-bs-parent="#subSelector1">
+                                <div class="card">
+                                    <img src="assets/images/virtualSingerPortrait5.png"
+                                        class="card-img-top img-fluid card-portrait" alt="MEIKO">
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="margin-top: 25rem;">MEIKO</h5>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">Género: Femenino</li>
+                                            <li class="list-group-item">Aniversario: 5 de noviembre</li>
+                                            <li class="list-group-item">Altura: 167 cm</li>
+                                        </ul>
+                                        <p class="card-text">Una VIRTUAL SINGER de pelo castaño corto. Su atuendo
+                                            característico consiste en un top rojo vibrante y una minifalda a juego. Es
+                                            una cantante excepcional con una voz cálida y femenina.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="collapse" id="kaito" data-bs-parent="#subSelector1">
+                                <div class="card">
+                                    <img src="assets/images/virtualSingerPortrait6.png"
+                                        class="card-img-top img-fluid card-portrait" alt="KAITO">
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="margin-top: 25rem;">KAITO</h5>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">Género: Femenino</li>
+                                            <li class="list-group-item">Aniversario: 31 de agosto</li>
+                                            <li class="list-group-item">Altura: 158 cm</li>
+                                        </ul>
+                                        <p class="card-text">Un CANTANTE VIRTUAL con el pelo azul oscuro algo rebelde,
+                                            que lleva un pañuelo de gran tamaño en un color a juego. Su voz masculina
+                                            suena fresca y natural con un amplio registro vocal.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mt-5">
+                        <img src="assets/images/virtualSingerBackground.png" class="card-img-top" alt="SEKAI">
+                        <div class="card-body">
+                            <h5 class="card-title">Ayudantes</h5>
+                            <p class="card-text">Los VIRTUAL SINGER no tienen un SEKAI propio, son ellos quienes ayudan
+                                a los dueños de los SEKAI a encontrar sus <i>verdaderos sentimientos</i>. Mira los demás
+                                grupos para concer sus SEKAI.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Subselector de lista de botones de Leo/need -->
+                <div class="collapse p-3" id="leoNeed" data-bs-parent="#selector">
+                    <div class="row justify-content-center" id="subSelector2">
+                        <div class="list-group col-md-auto">
+                            <button type="button" class="list-group-item list-group-item-action p-5"
+                                data-bs-toggle="collapse" data-bs-target="#ichikaHoshino" aria-expanded="true"
+                                aria-controls="ichikaHoshino"><img src="assets/images/leoNeed1.png" alt="Ichika Hoshino"
+                                    class="img-fluid buttonlist-logo"></button>
+                            <button type="button" class="list-group-item list-group-item-action p-5"
+                                data-bs-toggle="collapse" data-bs-target="#sakiTenma" aria-expanded="false"
+                                aria-controls="sakiTenma"><img src="assets/images/leoNeed2.png" alt="Saki Tenma"
+                                    class="img-fluid buttonlist-logo"></button>
+                            <button type="button" class="list-group-item list-group-item-action p-5"
+                                data-bs-toggle="collapse" data-bs-target="#honamiMochizuki" aria-expanded="false"
+                                aria-controls="honamiMochizuki"><img src="assets/images/leoNeed3.png"
+                                    alt="Honami Mochizuki" class="img-fluid buttonlist-logo"></button>
+                            <button type="button" class="list-group-item list-group-item-action p-5"
+                                data-bs-toggle="collapse" data-bs-target="#shihoHinomori" aria-expanded="false"
+                                aria-controls="shihoHinomori"><img src="assets/images/leoNeed4.png" alt="Shiho Hinomori"
+                                    class="img-fluid buttonlist-logo"></button>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="collapse show" id="ichikaHoshino" data-bs-parent="#subSelector2">
+                                <div class="card">
+                                    <img src="assets/images/leoNeedPortrait1.png"
+                                        class="card-img-top img-fluid card-portrait" alt="Ichika Hoshino">
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="margin-top: 25rem;">Ichika Hoshino</h5>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">Escuela: Academia Femenina Miyamasuzaka</li>
+                                            <li class="list-group-item">Año Escolar: 2-A</li>
+                                            <li class="list-group-item">Pasatiempos: Escuchar canciones de Miku, admirar
+                                                sus cactus</li>
+                                            <li class="list-group-item">Especialidad: Pelar Manzanas</li>
+                                            <li class="list-group-item">Comida Favorita: Bollos Yakisoba</li>
+                                            <li class="list-group-item">Comida Menos Favorita: Guisantes Verdes</li>
+                                            <li class="list-group-item">No le gusta: Paseos Emocionantes</li>
+                                            <li class="list-group-item">Fecha de Nacimiento: 11 de Agosto</li>
+                                            <li class="list-group-item">Altura: 162 cm</li>
+                                        </ul>
+                                        <p class="card-text">Vocalista y guitarrista de Leo/need. Parece distante al
+                                            principio, pero es amable y cariñosa cuando llegas a conocerla. Ha formado
+                                            una banda con sus amigas de la infancia, Saki, Honami y Shiho, y han
+                                            conseguido su sueño de convertirse en músicas profesionales. Escribe las
+                                            letras de las canciones originales de Leo/need y recientemente ha empezado a
+                                            componer música con Hatsune Miku.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="collapse" id="sakiTenma" data-bs-parent="#subSelector2">
+                                <div class="card">
+                                    <img src="assets/images/leoNeedPortrait2.png"
+                                        class="card-img-top img-fluid card-portrait" alt="Saki Tenma">
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="margin-top: 25rem;">Saki Tenma</h5>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">Escuela: Academia Femenina Miyamasuzaka</li>
+                                            <li class="list-group-item">Año Escolar: 2-B</li>
+                                            <li class="list-group-item">Pasatiempos: Videos de moda y maquillaje,
+                                                bisutería</li>
+                                            <li class="list-group-item">Especialidad: Peluquería, malabares</li>
+                                            <li class="list-group-item">Comida Favorita: Aperitivos</li>
+                                            <li class="list-group-item">Comida Menos Favorita: Gachas de arroz</li>
+                                            <li class="list-group-item">No le gusta: Estar sola</li>
+                                            <li class="list-group-item">Fecha de Nacimiento: 9 de Mayo</li>
+                                            <li class="list-group-item">Altura: 160 cm</li>
+                                        </ul>
+                                        <p class="card-text">Tecladista de Leo/need. Siempre alegre, es la graciosa del
+                                            grupo. Tras perderse gran parte de su vida escolar debido a una enfermedad,
+                                            Saki atesora cada precioso recuerdo con sus seres queridos y celebra cada
+                                            hito juvenil. Estar ahí para los necesitados es importante para ella, y
+                                            vuelca estos sentimientos en sus canciones.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="collapse" id="honamiMochizuki" data-bs-parent="#subSelector2">
+                                <div class="card">
+                                    <img src="assets/images/leoNeedPortrait3.png"
+                                        class="card-img-top img-fluid card-portrait" alt="Honami Mochizuki">
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="margin-top: 25rem;">Honami Mochizuki</h5>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">Escuela: Academia Femenina Miyamasuzaka</li>
+                                            <li class="list-group-item">Año Escolar: 2-A</li>
+                                            <li class="list-group-item">Pasatiempos: Pasear a su perro, jardinería</li>
+                                            <li class="list-group-item">Especialidad: Tareas domésticas, natación</li>
+                                            <li class="list-group-item">Comida Favorita: Tarta de manzana</li>
+                                            <li class="list-group-item">Comida Menos Favorita: Queso</li>
+                                            <li class="list-group-item">No le gusta: Dibujar</li>
+                                            <li class="list-group-item">Fecha de Nacimiento: 27 de octubre</li>
+                                            <li class="list-group-item">Altura: 166 cm</li>
+                                        </ul>
+                                        <p class="card-text">Baterista de Leo/necesidad. Destaca tanto en los deportes
+                                            como en las tareas escolares y tiene una personalidad amable y cariñosa.
+                                            Solia tener miedo de tomar decisiones por no querer herir a los demas, pero
+                                            su tiempo en la banda la ha hecho un poco mas valiente al respecto. Honami
+                                            ahora apoya a Leo/necesidad con su fuerte espíritu.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="collapse" id="shihoHinomori" data-bs-parent="#subSelector2">
+                                <div class="card">
+                                    <img src="assets/images/leoNeedPortrait4.png"
+                                        class="card-img-top img-fluid card-portrait" alt="Shiho Hinomori">
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="margin-top: 25rem;">Shiho Hinomori</h5>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">Escuela: Academia Femenina Miyamasuzaka</li>
+                                            <li class="list-group-item">Año Escolar: 2-B</li>
+                                            <li class="list-group-item">Pasatiempos: Ir a conciertos de bandas de
+                                                chicas, tocar el bajo</li>
+                                            <li class="list-group-item">Especialidad: Caligrafía</li>
+                                            <li class="list-group-item">Comida Favorita: Ramen, Salisbury Steak</li>
+                                            <li class="list-group-item">Comida Menos Favorita: Tofu</li>
+                                            <li class="list-group-item">No le gusta: Su hermana</li>
+                                            <li class="list-group-item">Fecha de Nacimiento: 8 de enero</li>
+                                            <li class="list-group-item">Altura: 159 cm</li>
+                                        </ul>
+                                        <p class="card-text">Bajista de Leo/need. Es decidida con la música y a menudo
+                                            se la malinterpreta por ser una loba solitaria a la que no le gusta
+                                            aferrarse. Shiho se preocupa profundamente por los miembros de su banda,
+                                            junto a los que ha perseguido y alcanzado el sueño de convertirse en músicos
+                                            profesionales.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mt-5">
+                        <img src="assets/images/carousel_sekai1.jpg" class="card-img-top" alt="SEKAI">
+                        <div class="card-body">
+                            <h5 class="card-title">SEKAI Escuela</h5>
+                            <p class="card-text">Un mundo que toma la forma de una escuela, coloreado por el atardecer y
+                                formado por los verdaderos sentimientos de cuatro personas.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Subselector de lista de botones de MORE MORE JUMP! -->
+                <div class="collapse p-3" id="moreMoreJump" data-bs-parent="#selector">
+                    <div class="row justify-content-center" id="subSelector3">
+                        <div class="list-group col-md-auto">
+                            <button type="button" class="list-group-item list-group-item-action p-5"
+                                data-bs-toggle="collapse" data-bs-target="#minoriHanasato" aria-expanded="true"
+                                aria-controls="minoriHanasato"><img src="assets/images/moreMoreJump1.png"
+                                    alt="Minori Hanasato" class="img-fluid buttonlist-logo"></button>
+                            <button type="button" class="list-group-item list-group-item-action p-5"
+                                data-bs-toggle="collapse" data-bs-target="#harukaKiritani" aria-expanded="false"
+                                aria-controls="harukaKiritani"><img src="assets/images/moreMoreJump2.png"
+                                    alt="Haruka Kiritani" class="img-fluid buttonlist-logo"></button>
+                            <button type="button" class="list-group-item list-group-item-action p-5"
+                                data-bs-toggle="collapse" data-bs-target="#airiMomoi" aria-expanded="false"
+                                aria-controls="airiMomoi"><img src="assets/images/moreMoreJump3.png" alt="Airi Momoi"
+                                    class="img-fluid buttonlist-logo"></button>
+                            <button type="button" class="list-group-item list-group-item-action p-5"
+                                data-bs-toggle="collapse" data-bs-target="#shizukuHinomori" aria-expanded="false"
+                                aria-controls="shizukuHinomori"><img src="assets/images/moreMoreJump4.png"
+                                    alt="Shizuku Hinomori" class="img-fluid buttonlist-logo"></button>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="collapse show" id="minoriHanasato" data-bs-parent="#subSelector3">
+                                <div class="card">
+                                    <img src="assets/images/moreMoreJumpPortrait1.png"
+                                        class="card-img-top img-fluid card-portrait" alt="Minori Hanasato">
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="margin-top: 25rem;">Minori Hanasato</h5>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">Escuela: Academia Femenina Miyamasuzaka</li>
+                                            <li class="list-group-item">Año Escolar: 2-D</li>
+                                            <li class="list-group-item">Pasatiempos: Danzar, escribir en su diario,
+                                                cuidar de los animales</li>
+                                            <li class="list-group-item">Especialidad: Inventar eslóganes</li>
+                                            <li class="list-group-item">Comida Favorita: Salmón</li>
+                                            <li class="list-group-item">Comida Menos Favorita: Brócoli</li>
+                                            <li class="list-group-item">No le gusta: Actividades relajantes</li>
+                                            <li class="list-group-item">Fecha de Nacimiento: 14 de abril</li>
+                                            <li class="list-group-item">Altura: 159 cm</li>
+                                        </ul>
+                                        <p class="card-text">Una trabajadora de ojos grandes. Al principio, Minori era
+                                            la única integrante de MORE MORE JUMP! sin experiencia previa como idol,
+                                            pero su trabajo con el grupo la ha llevado a ganarse una base de fans y a
+                                            actuar en su primer espectáculo en solitario. Ahora sigue trabajando para
+                                            convertirse en una idol de primera fila digna de actuar en la Cúpula.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="collapse" id="harukaKiritani" data-bs-parent="#subSelector3">
+                                <div class="card">
+                                    <img src="assets/images/moreMoreJumpPortrait2.png"
+                                        class="card-img-top img-fluid card-portrait" alt="Haruka Kiritani">
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="margin-top: 25rem;">Haruka Kiritani</h5>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">Escuela: Academia Femenina Miyamasuzaka</li>
+                                            <li class="list-group-item">Año Escolar: 2-D</li>
+                                            <li class="list-group-item">Pasatiempos: Coleccionar mercadería con temática
+                                                de pingüinos</li>
+                                            <li class="list-group-item">Especialidad: Baloncesto</li>
+                                            <li class="list-group-item">Comida Favorita: Cualquier cosa dulce</li>
+                                            <li class="list-group-item">Comida Menos Favorita: Wasabi</li>
+                                            <li class="list-group-item">No le gusta: La ociosidad</li>
+                                            <li class="list-group-item">Fecha de Nacimiento: 5 de octubre</li>
+                                            <li class="list-group-item">Altura: 163 cm</li>
+                                        </ul>
+                                        <p class="card-text">Ex miembro de ASRUN, un grupo idol conocido en todo el
+                                            país. El espectáculo en solitario MORE MORE JUMP! ha dejado a Haruka más
+                                            preparada que nunca para seguir su carrera como idol. Junto con Minori, ha
+                                            decidido pasarse al curso de créditos y concentrar toda su energía en volver
+                                            a ser idol.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="collapse" id="airiMomoi" data-bs-parent="#subSelector3">
+                                <div class="card">
+                                    <img src="assets/images/moreMoreJumpPortrait3.png"
+                                        class="card-img-top img-fluid card-portrait" alt="Airi Momoi">
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="margin-top: 25rem;">Airi Momoi</h5>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">Escuela: Academia Femenina Miyamasuzaka</li>
+                                            <li class="list-group-item">Año Escolar: 3-E</li>
+                                            <li class="list-group-item">Pasatiempos: Investigar idols, ir de compras
+                                            </li>
+                                            <li class="list-group-item">Especialidad: Cocinar, cuidar niños</li>
+                                            <li class="list-group-item">Comida Favorita: Dulces japoneses</li>
+                                            <li class="list-group-item">Comida Menos Favorita: Hígado</li>
+                                            <li class="list-group-item">No le gusta: Gatos (alérgica)</li>
+                                            <li class="list-group-item">Fecha de Nacimiento: 19 de marzo</li>
+                                            <li class="list-group-item">Altura: 156 cm</li>
+                                        </ul>
+                                        <p class="card-text">Ex miembro del grupo idol QT. Inspira a los demás miembros
+                                            de MORE MORE JUMP! con su intensa pasión y orgullo por ser una idol. Airi
+                                            también destaca en planificación y programación, lo que le permite gestionar
+                                            de forma proactiva el trabajo de MORE MORE JUMP! en ausencia de una agencia.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="collapse" id="shizukuHinomori" data-bs-parent="#subSelector3">
+                                <div class="card">
+                                    <img src="assets/images/moreMoreJumpPortrait4.png"
+                                        class="card-img-top img-fluid card-portrait" alt="Shizuku Hinomori">
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="margin-top: 25rem;">Shizuku Hinomori</h5>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">Escuela: Academia Femenina Miyamasuzaka</li>
+                                            <li class="list-group-item">Año Escolar: 3-E</li>
+                                            <li class="list-group-item">Pasatiempos: Leer, pasear</li>
+                                            <li class="list-group-item">Especialidad: Tiro con arco, bordado</li>
+                                            <li class="list-group-item">Comida Favorita: Fideos Udon, piel de tofu</li>
+                                            <li class="list-group-item">Comida Menos Favorita: Comidas picantes</li>
+                                            <li class="list-group-item">No le gusta: Leer mapas, usar ordenadores</li>
+                                            <li class="list-group-item">Fecha de Nacimiento: 6 de diciembre</li>
+                                            <li class="list-group-item">Altura: 168 cm</li>
+                                        </ul>
+                                        <p class="card-text">Antigua líder del siempre popular grupo de idols Cheerful *
+                                            Days. Al no llevarse bien con los demás miembros, Shizuku acabó dejando el
+                                            grupo con el corazón encogido. Sin embargo, una aparición conjunta en
+                                            televisión con su antiguo grupo le dio la oportunidad de abrirse sobre el
+                                            tema. Con un nuevo coraje, Shizuku es capaz de seguir adelante.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mt-5">
+                        <img src="assets/images/carousel_sekai2.jpg" class="card-img-top" alt="SEKAI">
+                        <div class="card-body">
+                            <h5 class="card-title">SEKAI Escenario</h5>
+                            <p class="card-text">Nacido de el amor de cuatro personas por las idols. El mundo toma la
+                                forma de un escenario con luces centelleantes</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Subselector de lista de botones de Vivid BAD SQUAD -->
+                <div class="collapse p-3" id="vividBadSquad" data-bs-parent="#selector">
+                    <div class="row justify-content-center" id="subSelector4">
+                        <div class="list-group col-md-auto">
+                            <button type="button" class="list-group-item list-group-item-action p-5"
+                                data-bs-toggle="collapse" data-bs-target="#kohaneAzusawa" aria-expanded="true"
+                                aria-controls="kohaneAzusawa"><img src="assets/images/vividBadSquad1.png"
+                                    alt="Kohane Azusawa" class="img-fluid buttonlist-logo"></button>
+                            <button type="button" class="list-group-item list-group-item-action p-5"
+                                data-bs-toggle="collapse" data-bs-target="#anShiraishi" aria-expanded="false"
+                                aria-controls="anShiraishi"><img src="assets/images/vividBadSquad2.png"
+                                    alt="An Shiraishi" class="img-fluid buttonlist-logo"></button>
+                            <button type="button" class="list-group-item list-group-item-action p-5"
+                                data-bs-toggle="collapse" data-bs-target="#akitoShinonome" aria-expanded="false"
+                                aria-controls="akitoShinonome"><img src="assets/images/vividBadSquad3.png"
+                                    alt="Akito Shinonome" class="img-fluid buttonlist-logo"></button>
+                            <button type="button" class="list-group-item list-group-item-action p-5"
+                                data-bs-toggle="collapse" data-bs-target="#toyaAoyagi" aria-expanded="false"
+                                aria-controls="toyaAoyagi"><img src="assets/images/vividBadSquad4.png" alt="Toya Aoyagi"
+                                    class="img-fluid buttonlist-logo"></button>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="collapse show" id="kohaneAzusawa" data-bs-parent="#subSelector4">
+                                <div class="card">
+                                    <img src="assets/images/vividBadSquadPortrait1.png"
+                                        class="card-img-top img-fluid card-portrait" alt="Kohane Azusawa">
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="margin-top: 25rem;">Kohane Azusawa</h5>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">Escuela: Academia Femenina Miyamasuzaka</li>
+                                            <li class="list-group-item">Año Escolar: 2-A</li>
+                                            <li class="list-group-item">Pasatiempos: Cuidar de la serpiente mascota de
+                                                su padre</li>
+                                            <li class="list-group-item">Especialidad: Fotografía</li>
+                                            <li class="list-group-item">Comida Favorita: Bollos de melocotón, bolas de
+                                                sésamo</li>
+                                            <li class="list-group-item">Comida Menos Favorita: Alimentos en escabeche
+                                            </li>
+                                            <li class="list-group-item">No le gusta: Hablar en público</li>
+                                            <li class="list-group-item">Fecha de Nacimiento: 2 de marzo</li>
+                                            <li class="list-group-item">Altura: 156 cm</li>
+                                        </ul>
+                                        <p class="card-text">Una vez fue una chica tímida, pero desde entonces Kohane ha
+                                            ganado confianza en su canto gracias al apoyo de los miembros de su equipo y
+                                            al entrenamiento con Taiga, miembro del grupo que organizó el legendario
+                                            evento RAD WEEKEND. A pesar de sentirse frustrada tras una aplastante
+                                            derrota a manos de Taiga, Kohane ha utilizado esa frustración para volver a
+                                            levantarse y reafirmarse en su empeño por superar el RAD WEEKEND.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="collapse" id="anShiraishi" data-bs-parent="#subSelector4">
+                                <div class="card">
+                                    <img src="assets/images/vividBadSquadPortrait2.png"
+                                        class="card-img-top img-fluid card-portrait" alt="An Shiraishi">
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="margin-top: 25rem;">An Shiraishi</h5>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">Escuela: Instituto Kamiyama</li>
+                                            <li class="list-group-item">Año Escolar: 2-A</li>
+                                            <li class="list-group-item">Pasatiempos: Cultivar menta</li>
+                                            <li class="list-group-item">Especialidad: Hacer café y té</li>
+                                            <li class="list-group-item">Comida Favorita: Helado de ron y pasas</li>
+                                            <li class="list-group-item">Comida Menos Favorita: Tomates</li>
+                                            <li class="list-group-item">No le gusta: Fantasmas, historias de miedo</li>
+                                            <li class="list-group-item">Fecha de Nacimiento: 26 de julio</li>
+                                            <li class="list-group-item">Altura: 160 cm</li>
+                                        </ul>
+                                        <p class="card-text">Alegre y honesta, An ayuda en el Weekend Garage. Estaba
+                                            trabajando para superar el legendario evento del equipo de su padre, RAD
+                                            WEEKEND, cuando se enteró de un secreto estremecedor sobre Nagi, su
+                                            compañera de equipo y su modelo a seguir. Tras enterarse de las esperanzas
+                                            de Nagi de su padre, An se ha recuperado, comprometiéndose una vez más a
+                                            superar la leyenda.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="collapse" id="akitoShinonome" data-bs-parent="#subSelector4">
+                                <div class="card">
+                                    <img src="assets/images/vividBadSquadPortrait3.png"
+                                        class="card-img-top img-fluid card-portrait" alt="Akito Shinonome">
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="margin-top: 25rem;">Akito Shinonome</h5>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">Escuela: Instituto Kamiyama</li>
+                                            <li class="list-group-item">Año Escolar: 2-A</li>
+                                            <li class="list-group-item">Pasatiempos: Estilismo de moda</li>
+                                            <li class="list-group-item">Especialidad: Beatboxing</li>
+                                            <li class="list-group-item">Comida Favorita: Panqueques, tarta de queso</li>
+                                            <li class="list-group-item">Comida Menos Favorita: Zanahorias</li>
+                                            <li class="list-group-item">No le gusta: Perros</li>
+                                            <li class="list-group-item">Fecha de Nacimiento: 12 de noviembre</li>
+                                            <li class="list-group-item">Altura: 176 cm</li>
+                                        </ul>
+                                        <p class="card-text">Increíblemente trabajador, Akito pone todo su empeño en
+                                            entrenarse para superar el legendario evento RAD WEEKEND. Sus esfuerzos
+                                            estuvieron a punto de detenerse tras conocer la verdad que se ocultaba tras
+                                            el evento, pero su fuerte deseo de perseguir su sueño le ha impulsado a
+                                            seguir adelante. </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="collapse" id="toyaAoyagi" data-bs-parent="#subSelector4">
+                                <div class="card">
+                                    <img src="assets/images/vividBadSquadPortrait4.png"
+                                        class="card-img-top img-fluid card-portrait" alt="Toya Aoyagi">
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="margin-top: 25rem;">Toya Aoyagi</h5>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">Escuela: Instituto Kamiyama</li>
+                                            <li class="list-group-item">Año Escolar: 2-B</li>
+                                            <li class="list-group-item">Pasatiempos: Lectura</li>
+                                            <li class="list-group-item">Especialidad: Piano, violín</li>
+                                            <li class="list-group-item">Comida Favorita: Café, galletas</li>
+                                            <li class="list-group-item">Comida Menos Favorita: Calamares</li>
+                                            <li class="list-group-item">No le gusta: Las alturas</li>
+                                            <li class="list-group-item">Fecha de Nacimiento: 25 de mayo</li>
+                                            <li class="list-group-item">Altura: 179 cm</li>
+                                        </ul>
+                                        <p class="card-text">Hijo de un músico clásico y un prodigio, Toya aspira a
+                                            superar el legendario evento RAD WEEKEND y ha empezado a componer para Vivid
+                                            BAD SQUAD. A pesar de que al principio se sintió abrumado tras ver las
+                                            alturas que tendría que escalar para alcanzar ese objetivo, ahora espera
+                                            utilizar su experiencia para superar este muro con su equipo y ver las
+                                            vistas desde la cima.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mt-5">
+                        <img src="assets/images/carousel_sekai3.jpg" class="card-img-top" alt="SEKAI">
+                        <div class="card-body">
+                            <h5 class="card-title">SEKAI Calle</h5>
+                            <p class="card-text">Creado por los sueños de cuatro personas, los callejones de este mundo
+                                estan llenos de grafitti y posters de eventos.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Subselector de lista de botones de Wonderlands x Showtime -->
+                <div class="collapse p-3" id="wonderlandsShowtime" data-bs-parent="#selector">
+                    <div class="row justify-content-center" id="subSelector5">
+                        <div class="list-group col-md-auto">
+                            <button type="button" class="list-group-item list-group-item-action p-5"
+                                data-bs-toggle="collapse" data-bs-target="#tsukasaTenma" aria-expanded="true"
+                                aria-controls="tsukasaTenma"><img src="assets/images/wonderlandsShowtime1.png"
+                                    alt="Tsukasa Tenma" class="img-fluid buttonlist-logo"></button>
+                            <button type="button" class="list-group-item list-group-item-action p-5"
+                                data-bs-toggle="collapse" data-bs-target="#emuOtori" aria-expanded="false"
+                                aria-controls="emuOtori"><img src="assets/images/wonderlandsShowtime2.png"
+                                    alt="Emu Otori" class="img-fluid buttonlist-logo"></button>
+                            <button type="button" class="list-group-item list-group-item-action p-5"
+                                data-bs-toggle="collapse" data-bs-target="#neneKusanagi" aria-expanded="false"
+                                aria-controls="neneKusanagi"><img src="assets/images/wonderlandsShowtime3.png"
+                                    alt="Nene Kusanagi" class="img-fluid buttonlist-logo"></button>
+                            <button type="button" class="list-group-item list-group-item-action p-5"
+                                data-bs-toggle="collapse" data-bs-target="#ruiKamishiro" aria-expanded="false"
+                                aria-controls="ruiKamishiro"><img src="assets/images/wonderlandsShowtime4.png"
+                                    alt="Rui Kamishiro" class="img-fluid buttonlist-logo"></button>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="collapse show" id="tsukasaTenma" data-bs-parent="#subSelector5">
+                                <div class="card">
+                                    <img src="assets/images/wonderlandsShowtimePortrait1.png"
+                                        class="card-img-top img-fluid card-portrait" alt="Tsukasa Tenma">
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="margin-top: 25rem;">Tsukasa Tenma</h5>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">Escuela: Instituto Kamiyama</li>
+                                            <li class="list-group-item">Año Escolar: 3-C</li>
+                                            <li class="list-group-item">Pasatiempos: Musicales, hacer disfraces</li>
+                                            <li class="list-group-item">Especialidad: Hacer poses, piano</li>
+                                            <li class="list-group-item">Comida Favorita: Acqua pazza, cerdo frito con
+                                                jengibre</li>
+                                            <li class="list-group-item">Comida Menos Favorita: Pimientos</li>
+                                            <li class="list-group-item">No le gusta: Bichos (especialmente ciempiés y
+                                                milpiés)</li>
+                                            <li class="list-group-item">Fecha de Nacimiento: 17 de mayo</li>
+                                            <li class="list-group-item">Altura: 173 cm</li>
+                                        </ul>
+                                        <p class="card-text">Aspirante a estrella mundial y líder de
+                                            Wonderlands×Showtime. Tras adquirir una amplia experiencia como miembro del
+                                            elenco de Phoenix Wonderland, Tsukasa desea aprender más y ampliar sus
+                                            horizontes. Junto con sus compañeros de troupe, ha decidido despedirse del
+                                            Escenario Maravilla para dar el siguiente paso de su viaje.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="collapse" id="emuOtori" data-bs-parent="#subSelector5">
+                                <div class="card">
+                                    <img src="assets/images/wonderlandsShowtimePortrait2.png"
+                                        class="card-img-top img-fluid card-portrait" alt="Emu Otori">
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="margin-top: 25rem;">Emu Otori</h5>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">Escuela: Academia Femenina Miyamasuzaka</li>
+                                            <li class="list-group-item">Año Escolar: 2-B</li>
+                                            <li class="list-group-item">Pasatiempos: Explorar el barrio</li>
+                                            <li class="list-group-item">Especialidad: Acrobacia, comidas</li>
+                                            <li class="list-group-item">Comida Favorita: Taiyaki</li>
+                                            <li class="list-group-item">Comida Menos Favorita: ¡Ninguna!</li>
+                                            <li class="list-group-item">No le gusta: Atardecer</li>
+                                            <li class="list-group-item">Fecha de Nacimiento: 9 de septiembre</li>
+                                            <li class="list-group-item">Altura: 152 cm</li>
+                                        </ul>
+                                        <p class="card-text">Un manojo de energía e inocencia. Emu sueña con llevar la
+                                            antorcha del parque temático de su abuelo, Phoenix Wonderland, y estaba
+                                            dispuesta a separarse del resto de Wonderlands×Showtime mientras perseguían
+                                            sus propios sueños. Sin embargo, animada por sus hermanos y compañeros de
+                                            grupo, ha decidido que, para crecer, necesita aventurarse en el mundo.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="collapse" id="neneKusanagi" data-bs-parent="#subSelector5">
+                                <div class="card">
+                                    <img src="assets/images/wonderlandsShowtimePortrait3.png"
+                                        class="card-img-top img-fluid card-portrait" alt="Nene Kusanagi">
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="margin-top: 25rem;">Nene Kusanagi</h5>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">Escuela: Instituto Kamiyama</li>
+                                            <li class="list-group-item">Año Escolar: 2-A</li>
+                                            <li class="list-group-item">Pasatiempos: Juegos de lucha, musicales,
+                                                películas</li>
+                                            <li class="list-group-item">Especialidad: Cantar, tecnología</li>
+                                            <li class="list-group-item">Comida Favorita: Toronja</li>
+                                            <li class="list-group-item">Comida Menos Favorita: Alimentos con sabor a
+                                                menta</li>
+                                            <li class="list-group-item">No le gusta: Lugares abarrotados</li>
+                                            <li class="list-group-item">Fecha de Nacimiento: 20 de julio</li>
+                                            <li class="list-group-item">Altura: 156 cm</li>
+                                        </ul>
+                                        <p class="card-text">Una chica que sueña con ser una estrella internacional de
+                                            la música. Aunque Nene perdió la confianza en su capacidad para cantar
+                                            durante un ensayo para un espectáculo importante, esto la llevó a reafirmar
+                                            su pasión por el canto. Junto con los demás miembros de
+                                            Wonderlands×Showtime, está decidida a vivir las muchas experiencias que el
+                                            mundo puede ofrecerle.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="collapse" id="ruiKamishiro" data-bs-parent="#subSelector5">
+                                <div class="card">
+                                    <img src="assets/images/wonderlandsShowtimePortrait4.png"
+                                        class="card-img-top img-fluid card-portrait" alt="Rui Kamishiro">
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="margin-top: 25rem;">Rui Kamishiro</h5>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">Escuela: Instituto Kamiyama</li>
+                                            <li class="list-group-item">Año Escolar: 3-C</li>
+                                            <li class="list-group-item">Pasatiempos: Planificar espectáculos, arte con
+                                                globos</li>
+                                            <li class="list-group-item">Especialidad: Inventar</li>
+                                            <li class="list-group-item">Comida Favorita: Caramelos de soda</li>
+                                            <li class="list-group-item">Comida Menos Favorita: Verduras</li>
+                                            <li class="list-group-item">No le gusta: Limpiar, tareas serviles</li>
+                                            <li class="list-group-item">Fecha de Nacimiento: 24 de junio</li>
+                                            <li class="list-group-item">Altura: 182 cm</li>
+                                        </ul>
+                                        <p class="card-text">Un despreocupado genio de la dirección. Rui, que antes
+                                            actuaba en solitario, encontró un nuevo hogar entre los miembros de
+                                            Wonderlands×Showtime, que aceptaron sus atrevidas ideas. En su búsqueda de
+                                            una forma de que el grupo permanezca unido a pesar de perseguir sueños
+                                            diferentes, ha ideado un acuerdo que les permite montar espectáculos juntos
+                                            mientras cada uno sigue su camino.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mt-5">
+                        <img src="assets/images/carousel_sekai4.jpg" class="card-img-top" alt="SEKAI">
+                        <div class="card-body">
+                            <h5 class="card-title">SEKAI Wonderland</h5>
+                            <p class="card-text">Formado por el amor de los miembros por lo asombroso, toma la forma de
+                                un parque de atracciones lleno de cosas fantásticas, como flores que cantan y peluches
+                                que andan.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Subselector de lista de botones de 25-ji, Nightcord de. -->
+                <div class="collapse p-3" id="nightcordAt25" data-bs-parent="#selector">
+                    <div class="row justify-content-center" id="subSelector6">
+                        <div class="list-group col-md-auto">
+                            <button type="button" class="list-group-item list-group-item-action p-5"
+                                data-bs-toggle="collapse" data-bs-target="#kanadeYoisaki" aria-expanded="true"
+                                aria-controls="kanadeYoisaki"><img src="assets/images/nightcordAt251.png"
+                                    alt="Kanade Yoisaki" class="img-fluid buttonlist-logo"></button>
+                            <button type="button" class="list-group-item list-group-item-action p-5"
+                                data-bs-toggle="collapse" data-bs-target="#mafuyuAsahina" aria-expanded="false"
+                                aria-controls="mafuyuAsahina"><img src="assets/images/nightcordAt252.png"
+                                    alt="Mafuyu Asahina" class="img-fluid buttonlist-logo"></button>
+                            <button type="button" class="list-group-item list-group-item-action p-5"
+                                data-bs-toggle="collapse" data-bs-target="#enaShinonome" aria-expanded="false"
+                                aria-controls="enaShinonome"><img src="assets/images/nightcordAt253.png"
+                                    alt="Ena Shinonome" class="img-fluid buttonlist-logo"></button>
+                            <button type="button" class="list-group-item list-group-item-action p-5"
+                                data-bs-toggle="collapse" data-bs-target="#mizukiAkiyama" aria-expanded="false"
+                                aria-controls="mizukiAkiyama"><img src="assets/images/nightcordAt254.png"
+                                    alt="Mizuki Akiyama" class="img-fluid buttonlist-logo"></button>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="collapse show" id="kanadeYoisaki" data-bs-parent="#subSelector6">
+                                <div class="card">
+                                    <img src="assets/images/nightcordAt25Portrait1.png"
+                                        class="card-img-top img-fluid card-portrait" alt="Kanade Yoisaki">
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="margin-top: 25rem;">Kanade Yoisaki</h5>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">Escuela: Escuela por correspondencia</li>
+                                            <li class="list-group-item">Año Escolar: -</li>
+                                            <li class="list-group-item">Pasatiempos: Buscar nueva música para escuchar,
+                                                películas, manga, anime, arte</li>
+                                            <li class="list-group-item">Especialidad: Una habilidad innata para
+                                                controlar el tiempo con precisión</li>
+                                            <li class="list-group-item">Comida Favorita: Fideos instantáneos, comida
+                                                enlatada</li>
+                                            <li class="list-group-item">Comida Menos Favorita: Cilantro, natto y otros
+                                                alimentos malolientes</li>
+                                            <li class="list-group-item">No le gusta: La luz solar directa, las tareas
+                                                domésticas</li>
+                                            <li class="list-group-item">Fecha de Nacimiento: 10 de febrero</li>
+                                            <li class="list-group-item">Altura: 154 cm</li>
+                                        </ul>
+                                        <p class="card-text">Compositor de Nightcord at 25:00. Kanade estaba encantada
+                                            cuando sus canciones empezaron a evocar cada vez más emociones en Mafuyu,
+                                            pero esta felicidad se vio truncada cuando la madre de Mafuyu pidió a Kanade
+                                            que se alejara de su hija. El comportamiento de esta mujer le pareció
+                                            desconcertante, por lo que Kanade se negó y optó por permanecer al lado de
+                                            Mafuyu.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="collapse" id="mafuyuAsahina" data-bs-parent="#subSelector6">
+                                <div class="card">
+                                    <img src="assets/images/nightcordAt25Portrait2.png"
+                                        class="card-img-top img-fluid card-portrait" alt="Mafuyu Asahina">
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="margin-top: 25rem;">Mafuyu Asahina</h5>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">Escuela: Academia Femenina Miyamasuzaka</li>
+                                            <li class="list-group-item">Año Escolar: 3-B</li>
+                                            <li class="list-group-item">Pasatiempos: Cuidar de una pecera vacía</li>
+                                            <li class="list-group-item">Especialidad: Hablar inglés</li>
+                                            <li class="list-group-item">Comida Favorita: Comida casera de mamá</li>
+                                            <li class="list-group-item">Comida Menos Favorita: No estoy segura</li>
+                                            <li class="list-group-item">No le gusta: No estoy segura</li>
+                                            <li class="list-group-item">Fecha de Nacimiento: 27 de enero</li>
+                                            <li class="list-group-item">Altura: 162 cm</li>
+                                        </ul>
+                                        <p class="card-text">Letrista de Nightcord at 25:00. Mafuyu perdió el sentido de
+                                            sí misma en medio de la presión por ser la "chica buena y amable" que su
+                                            madre esperaba que fuera, pero encontró refugio en la música y en Nightcord
+                                            at 25:00. Ante la amenaza de que le arrebaten su único espacio seguro, ha
+                                            huido de casa y ha buscado la ayuda de Kanade</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="collapse" id="enaShinonome" data-bs-parent="#subSelector6">
+                                <div class="card">
+                                    <img src="assets/images/nightcordAt25Portrait3.png"
+                                        class="card-img-top img-fluid card-portrait" alt="Ena Shinonome">
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="margin-top: 25rem;">Ena Shinonome</h5>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">Escuela: Instituto Kamiyama (Clases nocturnas)
+                                            </li>
+                                            <li class="list-group-item">Año Escolar: 3-D</li>
+                                            <li class="list-group-item">Pasatiempos: Dibujar, hacerse selfies, redes
+                                                sociales, egosurf</li>
+                                            <li class="list-group-item">Especialidad: Investigar accesorios de moda,
+                                                elegir los mejores ingredientes para cocinar</li>
+                                            <li class="list-group-item">Comida Favorita: Panqueques, tarta de queso</li>
+                                            <li class="list-group-item">Comida Menos Favorita: Zanahorias</li>
+                                            <li class="list-group-item">No le gusta: Levantarse por la mañana</li>
+                                            <li class="list-group-item">Fecha de Nacimiento: 30 de abril</li>
+                                            <li class="list-group-item">Altura: 158 cm</li>
+                                        </ul>
+                                        <p class="card-text">Ilustradora de Nightcord at 25:00. A pesar de luchar contra
+                                            su creencia de que no tiene talento artístico y de recibir duras críticas,
+                                            Ena persiste en crear arte. Tiene una personalidad directa y al principio se
+                                            sentía frustrada con Mafuyu por no expresar sus verdaderos sentimientos a su
+                                            madre. Sin embargo, al notar los cambios en Mafuyu desde que se conocieron,
+                                            Ena ha decidido cuidar de su querida amiga.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="collapse" id="mizukiAkiyama" data-bs-parent="#subSelector6">
+                                <div class="card">
+                                    <img src="assets/images/nightcordAt25Portrait4.png"
+                                        class="card-img-top img-fluid card-portrait" alt="Mizuki Akiyama">
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="margin-top: 25rem;">Mizuki Akiyama</h5>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">Escuela: Instituto Kamiyama</li>
+                                            <li class="list-group-item">Año Escolar: 2-B</li>
+                                            <li class="list-group-item">Pasatiempos: Hacer vídeos, collages</li>
+                                            <li class="list-group-item">Especialidad: Rediseñar ropa</li>
+                                            <li class="list-group-item">Comida Favorita: Arroz al curry, patatas fritas
+                                            </li>
+                                            <li class="list-group-item">Comida Menos Favorita: Setas</li>
+                                            <li class="list-group-item">No le gusta: Alimentos demasiado calientes</li>
+                                            <li class="list-group-item">Fecha de Nacimiento: 27 de agosto</li>
+                                            <li class="list-group-item">Altura: 165 cm</li>
+                                        </ul>
+                                        <p class="card-text">Editora de vídeo de Nightcord at 25:00. Mizuki quería hacer
+                                            algo ante el empeoramiento de la relación entre Mafuyu y su madre, pero se
+                                            sentía incapaz de ofrecer nada sabiendo que huyen de sus problemas. Sin
+                                            embargo, Mizuki se dio cuenta de que hay cosas que se pueden ganar huyendo,
+                                            y le dijo a Mafuyu que hacerlo siempre es una opción.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mt-5">
+                        <img src="assets/images/carousel_sekai5.jpg" class="card-img-top" alt="SEKAI">
+                        <div class="card-body">
+                            <h5 class="card-title">SEKAI Vacío</h5>
+                            <p class="card-text">Un mundo silencioso y vacío con solo unos pocos destellos de luz
+                                formados por los sentimientos de una sola persona. Nadie sabe cuán grande es su
+                                extensión.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="text-muted text-center mt-5">
+            <p> &copy; 2025 Mi sitio web. Todos los derechos reservados. </p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

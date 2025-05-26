@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sitio web Bootstrap</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- Script para cambiar el tema de la página según lo seleccionado en el dropdown menu
+     Utiliza localStorage para guardar la selección del usuario
+     La mayoría hecha por Bootstrap en su documentación -->
+    <script>
+        /*!
+         * Color mode toggler for Bootstrap's docs (https://getbootstrap.com/)
+         * Copyright 2011-2025 The Bootstrap Authors
+         * Licensed under the Creative Commons Attribution 3.0 Unported License.
+         */
+
+        (() => {
+            'use strict'
+
+            const getStoredTheme = () => localStorage.getItem('theme')
+            const setStoredTheme = theme => localStorage.setItem('theme', theme)
+
+            const getPreferredTheme = () => {
+                const storedTheme = getStoredTheme()
+                if (storedTheme) {
+                    return storedTheme
+                }
+
+                return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+            }
+
+            const setTheme = theme => {
+                if (theme === 'auto') {
+                    document.documentElement.setAttribute('data-bs-theme', (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'))
+                } else {
+                    document.documentElement.setAttribute('data-bs-theme', theme)
+                }
+            }
+
+            setTheme(getPreferredTheme())
+
+            //Modifiqué esta función para que solamente cambie el .active de los botones
+            const showActiveTheme = theme => {
+                const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
+
+                document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
+                    element.classList.remove('active')
+                })
+
+                btnToActive.classList.add('active')
+            }
+
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+                const storedTheme = getStoredTheme()
+                if (storedTheme !== 'light' && storedTheme !== 'dark') {
+                    setTheme(getPreferredTheme())
+                }
+            })
+
+            window.addEventListener('DOMContentLoaded', () => {
+                showActiveTheme(getStoredTheme() || 'auto')
+
+                document.querySelectorAll('[data-bs-theme-value]')
+                    .forEach(toggle => {
+                        toggle.addEventListener('click', () => {
+                            const theme = toggle.getAttribute('data-bs-theme-value')
+                            setStoredTheme(theme)
+                            setTheme(theme)
+                            showActiveTheme(theme)
+                        })
+                    })
+            })
+        })()
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <header class="container">
+            <h1>
+                <a class="navbar-brand" href="index.html"><img src="assets/images/logo.png" class="img-fluid"
+                        width="220px" alt="HATSUNE MIKU COLORFUL STAGE"></a>
+            </h1>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="acerca.html">Acerca de</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contenido.html">Contenido principal</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
+
+                    <!-- Dropdown de temas -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Tema
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><button class="dropdown-item" data-bs-theme-value="light">Claro</button></li>
+                            <li><button class="dropdown-item" data-bs-theme-value="dark">Oscuro</button></li>
+                            <li><button class="dropdown-item" data-bs-theme-value="auto">Automático</button></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </header>
+    </nav>
+
+    <main class="container mt-5">
+        <div class="row row-cols-md-1 justify-content-md-center">
+            <!-- Resumen -->
+            <article class="col-md-12">
+                <h1 class="display-1">Acerca de...</h1>
+                <p class="fs-5 fw-light">Este sitio es para recopilar información del juego <i>Project SEKAI</i>. Más
+                    abajo encontrarás información sobre la historia, el gameplay y los shows en vivo que se realizan
+                    dentro del juego.</p>
+            </article>
+            <!-- Imagen principal -->
+            <div class="col-md-6">
+                <figure class="figure">
+                    <img src="assets/images/acerca.png" alt="Inicio" class="figure-img img-fluid inicio">
+                    <figcaption class="figure-caption text-center">Akiyama Mizuki, de 25-ji, Nightcord de.
+                    </figcaption>
+                </figure>
+            </div>
+            <!-- Un selector de cartas mediante botones que colapsan o muestran -->
+            <div class="col-md-12" id="selector">
+                <!-- Botones -->
+                <div class="d-flex justify-content-center mt-3">
+                    <p class="d-inline-flex gap-1">
+                        <button class="btn border" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#cardHistoria" aria-expanded="true" aria-controls="cardHistoria">
+                            <h1 class="display-6">... la historia</h1>
+                        </button>
+                        <button class="btn border" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#cardGameplay" aria-expanded="false" aria-controls="cardGameplay">
+                            <h1 class="display-6">... el gameplay</h1>
+                        </button>
+                        <button class="btn border" type="button" data-bs-toggle="collapse" data-bs-target="#cardShow"
+                            aria-expanded="false" aria-controls="cardShow">
+                            <h1 class="display-6">... los shows</h1>
+                        </button>
+                    </p>
+                </div>
+                <!-- Carta de Historia -->
+                <div class="collapse show" id="cardHistoria" data-bs-parent="#selector">
+                    <div class="card">
+                        <img src="assets/images/acerca_card1.jpg" class="card-img-top" alt="Miku e Ichika">
+                        <div class="card-body">
+                            <h5 class="card-title">"SEKAI". El lugar donde puedes encontrar tu verdadero ser.</h5>
+                            <p class="card-text">Había una chica que vivía en Tokio, la cual admiraba a Miku. Mientras
+                                observaba una gran pantalla en la acera en su camino a casa, pensó, "Miku es tan
+                                maravillosa... Ella puede ser lo que quiera". Cuando llegó a casa, se dio cuenta que en
+                                su celular apareció una canción extraña titulada "Sin título", al reproducirla fue
+                                transporatada a un extraño lugar con un destello blanco. Allí, alguien la estaba
+                                esperando. "¡Bienvenida a 'SEKAI'!" le dijo Miku.</p>
+                            <!-- Se muestra el resto de la información en dos columnas -->
+                            <div class="row row-cols-md-6 justify-content-center">
+                                <article class="col-md-6 card-text1">
+                                    <h1 class="display-6">SEKAI</h1>
+                                    <p>Son mundos distintos al mundo real que reflejan los <i>verdaderos
+                                            sentimientos</i> de las personas. Un SEKAI existe para cada uno de esos
+                                        sentimientos y su apariencia cambia para parecérceles</p>
+                                </article>
+                                <!-- Carrusel de imágenes que se desliza automáticamente -->
+                                <div class="col-md-6 my-3">
+                                    <div class="carousel slide" id="carouselSekai" data-bs-ride="carousel">
+                                        <div class="carousel-inner">
+                                            <div class="carousel-item active">
+                                                <img src="assets/images/carousel_sekai1.jpg" class="d-block w-100"
+                                                    alt="SEKAI">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img src="assets/images/carousel_sekai2.jpg" class="d-block w-100"
+                                                    alt="SEKAI">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img src="assets/images/carousel_sekai3.jpg" class="d-block w-100"
+                                                    alt="SEKAI">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img src="assets/images/carousel_sekai4.jpg" class="d-block w-100"
+                                                    alt="SEKAI">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img src="assets/images/carousel_sekai5.jpg" class="d-block w-100"
+                                                    alt="SEKAI">
+                                            </div>
+                                        </div>
+                                        <button class="carousel-control-prev" type="button"
+                                            data-bs-target="#carouselSekai" data-bs-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">Anterior</span>
+                                        </button>
+                                        <button class="carousel-control-next" type="button"
+                                            data-bs-target="#carouselSekai" data-bs-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">Siguiente</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 my-3">
+                                    <img src="assets/images/acerca_card11.jpg" class="d-block w-100" alt="Miku">
+                                </div>
+                                <article class="col-md-6 card-text1">
+                                    <h1 class="display-6">HATSUNE MIKU</h1>
+                                    <p>En el mundo real es una VIRTUAL SINGER que canta las canciones de creadores
+                                        alrededor del mundo. Dentro de un SEKAI, cambia su apariencia de acuerdo a los
+                                        sentimientos, y ayuda a quien porta los sentimientos a encontrar sus
+                                        <i>verdaderos sentimientos</i>.
+                                    </p>
+                                </article>
+                                <article class="col-md-6 card-text1">
+                                    <h1 class="display-6">Sin título</h1>
+                                    <p>Una canción silenciosa que aparece cuando se crea un SEKAI, y funciona como la
+                                        puerta para ingresar a esos mundos. Consigue su título cuando las personas
+                                        descubren sus <i>verdaderos sentimientos</i> y canta junto a Miku y sus amigos,
+                                        convirtiendo sus sentimientos en una canción.</p>
+                                </article>
+                                <div class="col-md-6 my-3">
+                                    <img src="assets/images/acerca_card12.jpg" class="d-block w-100" alt="Miku">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Carta de Gameplay -->
+                <div class="collapse" id="cardGameplay" data-bs-parent="#selector">
+                    <div class="card">
+                        <img src="assets/images/acerca_card2.jpg" class="card-img-top" alt="Gameplay">
+                        <div class="card-body">
+                            <h5 class="card-title">Sistema de juego rítmico.</h5>
+                            <p class="card-text">Tocar la pantalla, mantenerla pulsada, y deslizar el dedo son las tres
+                                formas de conseguir puntos en el juego, si aciertas todas las notas al ritmo de la
+                                música conseguirás un puntaje perfecto. Entre mayor puntaje, más experiencia y objetos
+                                conseguirás, lo que te permite subir de nivel tus cartas de personaje y desbloquear
+                                atuentos nuevos para ellos.</p>
+                            <!-- Se muestra el resto de la información en dos columnas -->
+                            <div class="row row-cols-md-6 justify-content-center">
+                                <article class="col-md-6 card-text1">
+                                    <h1 class="display-6">Dificultad</h1>
+                                    <p>Hay 6 distintas dificultades que puedes seleccionar para jugar, cada una requiere
+                                        un nivel de habilidad diferente, pero también otorgan diferentes recompensas,
+                                        debido a que entre más difícil sea, mayor es el puntaje que se puede obtener.
+                                    </p>
+                                </article>
+                                <div class="col-md-6 my-3">
+                                    <img src="assets/images/acerca_card21.jpg" class="d-block w-100" alt="Dificultades">
+                                </div>
+                                <div class="col-md-6 my-3">
+                                    <img src="assets/images/acerca_card22.jpg" class="d-block w-100" alt="Dificultades">
+                                </div>
+                                <article class="col-md-6 card-text1">
+                                    <h1 class="display-6">Clasificatorias</h1>
+                                    <p>Una vez alcanzas el rango 20, y hayas conseguido al menos 5 combos completos en
+                                        canciones con dificultad experta o superior, podrás competir en clasificatorias.
+                                        Al ganar obtendrás puntos de rango que te permitirán escalar en los 7 rangos.
+                                    </p>
+                                </article>
+                                <article class="col-md-6 card-text1">
+                                    <h1 class="display-6">Mundo real y SEKAIs</h1>
+                                    <p>Fuera de las partidas, puedes movilizarte entre el mundo real y los SEKAI para
+                                        interactuar con los personajes y conocer más sus personalidades. Además, hay un
+                                        apartado para ver sus historias con las voces de los personajes.</p>
+                                </article>
+                                <div class="col-md-6 my-3">
+                                    <img src="assets/images/acerca_card23.jpg" class="d-block w-100" alt="Dificultades">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Carta de Shows -->
+                <div class="collapse" id="cardShow" data-bs-parent="#selector">
+                    <div class="card">
+                        <img src="assets/images/acerca_card3.jpg" class="card-img-top" alt="Entorno del show">
+                        <div class="card-body">
+                            <h5 class="card-title">Shows virtuales donde puedes disfrutar conciertos con otros
+                                jugadores.</h5>
+                            <p class="card-text">Dentro de los shows podrás disfrutar las coreografías y agitar tu
+                                bastón de luz al son de la música. Además podrás pasar el tiempo con tus amigos y otros
+                                jugadores en el lobby.</p>
+                            <!-- Video demostrativo -->
+                            <div class="row justify-content-center">
+                                <div class="col-md-12 my-3 ratio ratio-16x9">
+                                    <iframe src="https://www.youtube.com/embed/GVbNGZ0IgXk"
+                                        title="HATSUNE MIKU: COLORFUL STAGE! - Virtual Show" frameborder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="text-muted text-center mt-5">
+            <p> &copy; 2025 Mi sitio web. Todos los derechos reservados. </p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
